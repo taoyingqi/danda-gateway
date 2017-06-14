@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 var WXBizMsgCrypt = require('wechat-crypto')
 // var wxoauth = require('wechat-oauth')
-const config = require('../config')
+const { wxconfig } = require('../config')
 
 router.get('/wxservice', function (req, res, next) {
   var msgSignature = req.query.msg_signature
@@ -10,7 +10,7 @@ router.get('/wxservice', function (req, res, next) {
   var nonce = req.query.nonce
   console.log(`[msg_signature=${msgSignature}, timestamp=${timestamp}, nonce=${nonce}]`)
   var echostr = req.query.echostr
-  var cryptor = new WXBizMsgCrypt(config.token, config.encodingAESKey, config.corpId)
+  var cryptor = new WXBizMsgCrypt(wxconfig.token, wxconfig.encodingAESKey, wxconfig.corpId)
   var s = cryptor.decrypt(echostr)
   res.send(s.message)
 })
