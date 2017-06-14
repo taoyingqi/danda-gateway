@@ -1,21 +1,25 @@
-var express = require('express');
-var router = express.Router();
-var WXBizMsgCrypt = require('wechat-crypto');
-var wxoauth = require('wechat-oauth');
+var express = require('express')
+var router = express.Router()
+var WXBizMsgCrypt = require('wechat-crypto')
+// var wxoauth = require('wechat-oauth')
+const config = require('../config')
 
-router.get('/wxservice', function(req, res, next){
-	var msg_signature = req.query.msg_signature;
-	var timestamp = req.query.timestamp;
-	var nonce = req.query.nonce;
-	var echostr = req.query.echostr;
-	var cryptor = new WXBizMsgCrypt(config.token, config.encodingAESKey, config.corpId)
-	var s = cryptor.decrypt(echostr);
-	res.send(s.message);
-});
+router.get('/wxservice', function (req, res, next) {
+  var msgSignature = req.query.msg_signature
+  var timestamp = req.query.timestamp
+  var nonce = req.query.nonce
+  console.log(`[msg_signature=${msgSignature}, timestamp=${timestamp}, nonce=${nonce}]`)
+  var echostr = req.query.echostr
+  var cryptor = new WXBizMsgCrypt(config.token, config.encodingAESKey, config.corpId)
+  var s = cryptor.decrypt(echostr)
+  res.send(s.message)
+})
 
+router.get('/redirect', function (req, res, next) {
+  res.send({
+    id: 1000,
+    name: 'funded'
+  })
+})
 
-router.get('redirect', function(req, res, next) {
-
-});
-
-module.exports = router;
+module.exports = router
