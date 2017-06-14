@@ -3,6 +3,8 @@ var router = express.Router()
 var WXBizMsgCrypt = require('wechat-crypto')
 // var wxoauth = require('wechat-oauth')
 const { wxconfig } = require('../config')
+var OAuth = require('wechat-oauth')
+var client = new OAuth(wxconfig.appid, wxconfig.secret)
 
 router.get('/wxservice', function (req, res, next) {
   var msgSignature = req.query.msg_signature
@@ -16,9 +18,30 @@ router.get('/wxservice', function (req, res, next) {
 })
 
 router.get('/redirect', function (req, res, next) {
+  var url = client.getAuthorizeURL(
+    req.query.redirectUrl,
+    req.query.state,
+    req.query.accept ? 'snsapi_userinfo' : 'snsapi_base')
   res.send({
-    id: 1000,
-    name: 'funded'
+    url
+  })
+})
+
+router.get('/accessToken', function (req, res, next) {
+  client.getAccessToken(req.query.code, function (e, result) {
+    var accessToken = result.data.access_token
+    var openid = result.data.openid
+    res.send({
+      accessToken,
+      openid
+    })
+  })
+})
+
+router.get('/users/:openid', function (req, res, next) {
+  console.log(req.params)
+  client.getUser(req.params.openid, (e, result) => {
+    res.send(result)
   })
 })
 
