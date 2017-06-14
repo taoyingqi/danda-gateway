@@ -6,6 +6,7 @@ var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var request = require('request')
+const { proxy } = require('./config')
 
 var index = require('./routes/index')
 var users = require('./routes/users')
@@ -31,16 +32,34 @@ app.use('/', index)
 app.use('/users', users)
 app.use('/oauth', oauth)
 
-app.use('/api/*', async function (req, res, next) {
+app.use('/api/*', function (req, res, next) {
   console.log(req.path, req.params)
-  var url = 'http://www.ixzsenior.com/api/jobs/10027'
-  var r = null
-  if (req.method === 'POST') {
-    r = request.post({uri: url, json: req.body})
-  } else {
-    r = request(url)
+  var url = proxy.target + req.originalUrl
+  console.log(`[Proxy=${url}]`)
+  var options = {
+    url: url,
+    method: req.method,
+    headers: req.headers,
+    body: JSON.stringify(req.body)
   }
-  req.pipe(r).pipe(res)
+  console.log(options)
+  request(
+    options,
+    function (e, r, body) {
+      console.log(e, r, body)
+      res.send(JSON.parse(body))
+    })
+  // error
+  // req.pipe(request(options, function (e, r, body) {
+  //   // console.log('代理返回的数据',body);
+  // })).pipe(res)
+
+  // success
+  // res.pipe(request(
+  //   options,
+  //   function (e, r, body) {
+  //     console.log(e, r, body)
+  //   })).pipe(res)
 })
 
 // catch 404 and forward to error handler

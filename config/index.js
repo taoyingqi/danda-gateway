@@ -7,6 +7,7 @@ module.exports = {
   },
   appcode: 'token123',
   proxy: {
-    target: 'http://10.0.108.24:8080'
+    // target: 'http://10.0.108.24:8080'
+    target: 'http://106.15.43.10:10001'
   }
 }
