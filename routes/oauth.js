@@ -6,10 +6,10 @@ var OAuth = require('wechat-oauth')
 var client = new OAuth(wxconfig.appid, wxconfig.secret)
 
 router.get('/service', function (req, res, next) {
-  var msgSignature = req.query.msg_signature
+  var signature = req.query.signature
   var timestamp = req.query.timestamp
   var nonce = req.query.nonce
-  console.log(`[msg_signature=${msgSignature}, timestamp=${timestamp}, nonce=${nonce}]`)
+  console.log(`[signature=${signature}, timestamp=${timestamp}, nonce=${nonce}]`)
   var echostr = req.query.echostr
   var cryptor = new WXBizMsgCrypt(wxconfig.token, wxconfig.encodingAESKey, wxconfig.appid)
   var s = cryptor.decrypt(echostr)
