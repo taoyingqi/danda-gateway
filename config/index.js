@@ -12,5 +12,18 @@ module.exports = {
   proxy: {
     // target: 'http://10.0.108.24:8080'
     target: 'http://106.15.43.10:10001'
+  },
+  mysql: {
+    dialect: 'mysql',
+    host: 'localhost',
+    database: 'dantatv',
+    username: 'root',
+    password: '123456',
+    timezone: '+08:00',
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    }
   }
 }
