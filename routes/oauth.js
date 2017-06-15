@@ -30,8 +30,9 @@ router.get('/redirect', function (req, res, next) {
   res.redirect(url)
 })
 
-router.get('/accessToken', (req, res, next) => {
-  client.getAccessToken(req.query.code, (e, result) => {
+router.get('/accessToken', async (req, res, next) => {
+  let content = null
+  await client.getAccessToken(req.query.code, (e, result) => {
     // code error
     if (e) {
       res.send({
@@ -39,26 +40,20 @@ router.get('/accessToken', (req, res, next) => {
         msg: 'code错误'
       })
     }
-    const accessToken = result.data.access_token
-    const openid = result.data.openid
-    client.getUser(openid, (err, result) => {
+    content.accessToken = result.data.access_token
+    content.openid = result.data.openid
+    client.getUser(content.openid, (err, result) => {
       if (err) {
         console.log(err)
+        res.send(content)
       }
       // success
       console.log(result)
-      res.send({
-        accessToken,
-        openid,
-        result
-      })
-    })
-    // getUser error
-    res.send({
-      accessToken,
-      openid
+      content.wxUser = result
     })
   })
+  // getUser error
+  res.send(content)
 })
 
 router.get('/:openid', function (req, res, next) {
