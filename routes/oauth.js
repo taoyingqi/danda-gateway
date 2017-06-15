@@ -31,8 +31,8 @@ router.get('/redirect', function (req, res, next) {
 })
 
 router.get('/accessToken', (req, res, next) => {
-  let content = {}
   client.getAccessToken(req.query.code, (e, result) => {
+    let content = {}
     // code error
     if (e) {
       res.send({
@@ -51,11 +51,8 @@ router.get('/accessToken', (req, res, next) => {
       console.log(result)
       content.wxUser = result
       res.send(content)
-      res.end()
     })
   })
-  // getUser error
-  res.send(content)
 })
 
 router.get('/:openid', function (req, res, next) {
