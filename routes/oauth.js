@@ -27,9 +27,7 @@ router.get('/redirect', function (req, res, next) {
     req.query.state || '',
     req.query.accept ? 'snsapi_userinfo' : 'snsapi_base')
   console.log(`[url=${url}]`)
-  res.send({
-    url
-  })
+  res.redirect(url)
 })
 
 router.get('/accessToken', function (req, res, next) {
