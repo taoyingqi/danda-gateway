@@ -1,6 +1,5 @@
 var express = require('express')
 var router = express.Router()
-var WXBizMsgCrypt = require('wechat-crypto')
 const { wxconfig } = require('../config')
 var OAuth = require('wechat-oauth')
 var client = new OAuth(wxconfig.appid, wxconfig.appsecret)
@@ -25,8 +24,9 @@ router.get('/service', function (req, res, next) {
 router.get('/redirect', function (req, res, next) {
   var url = client.getAuthorizeURL(
     req.query.redirectUrl,
-    req.query.state,
+    req.query.state || '',
     req.query.accept ? 'snsapi_userinfo' : 'snsapi_base')
+  console.log(`[url=${url}]`)
   res.send({
     url
   })
