@@ -15,7 +15,7 @@ module.exports = {
   },
   mysql: {
     dialect: 'mysql',
-    host: 'localhost',
+    host: '106.15.43.10',
     database: 'dantatv',
     username: 'root',
     password: 'ixzmysql5',
