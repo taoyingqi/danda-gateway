@@ -51,6 +51,7 @@ router.get('/accessToken', (req, res, next) => {
       console.log(result)
       content.wxUser = result
       res.send(content)
+      res.end()
     })
   })
   // getUser error
