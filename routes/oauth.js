@@ -32,12 +32,20 @@ router.get('/redirect', function (req, res, next) {
 
 router.get('/accessToken', function (req, res, next) {
   client.getAccessToken(req.query.code, function (e, result) {
-    var accessToken = result.data.access_token
-    var openid = result.data.openid
+    const accessToken = result.data.access_token
+    const openid = result.data.openid
+    let wxuser = null
+    client.getUser(openid, function (err, result) {
+      if (err) {
+        console.log(err)
+      }
+      wxuser = result
+    })
     console.log(result.data)
     res.send({
       accessToken,
-      openid
+      openid,
+      wxuser
     })
   })
 })
