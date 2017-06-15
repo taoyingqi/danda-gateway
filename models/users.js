@@ -1,5 +1,5 @@
 module.exports = function modelUsers (sequelize, DataTypes) {
-  return sequelize.define('tuserinfo', {
+  return sequelize.define('users', {
     user_guid: {
       type: DataTypes.STRING,
       primaryKey: true,
@@ -56,6 +56,12 @@ module.exports = function modelUsers (sequelize, DataTypes) {
       type: DataTypes.DATE
     }
   }, {
-    freezeTableName: true
+    // 不使用自动表名
+    freezeTableName: true,
+    // define the table's name
+    tableName: 'tuserinfo',
+    // I don't want createdAt
+    createdAt: false,
+    updatedAt: false
   })
 }

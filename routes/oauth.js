@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const { wxconfig } = require('../config')
+const models = require('../models')
 var OAuth = require('wechat-oauth')
 var client = new OAuth(wxconfig.appid, wxconfig.appsecret)
 var sha1 = require('sha1')
@@ -47,6 +48,23 @@ router.get('/accessToken', (req, res, next) => {
         console.log(err)
         res.send(content)
       }
+      if (!models.users.fondOne({
+        where: {
+          user_guid: content.openid
+        }
+      })) {
+        const var1 = models.users.create({
+          user_guid: result.openid,
+          nickname: result.nickname,
+          sex: result.sex,
+          province: result.province,
+          city: result.city,
+          country: result.country,
+          headimgurl: result.headimgurl
+        })
+        console.log(var1)
+      }
+
       // success
       console.log(result)
       content.wxUser = result
