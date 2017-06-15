@@ -41,18 +41,16 @@ router.get('/accessToken', (req, res, next) => {
     }
     const accessToken = result.data.access_token
     const openid = result.data.openid
-    let wxuser = null
     client.getUser(openid, (err, result) => {
       if (err) {
         console.log(err)
       }
       // success
       console.log(result)
-      wxuser = result
       res.send({
         accessToken,
         openid,
-        wxuser
+        result
       })
     })
     // getUser error
