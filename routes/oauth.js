@@ -39,6 +39,7 @@ router.get('/accessToken', function (req, res, next) {
       if (err) {
         console.log(err)
       }
+      console.log(result)
       wxuser = result
     })
     console.log(result.data)
