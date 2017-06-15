@@ -18,7 +18,7 @@ module.exports = {
     host: 'localhost',
     database: 'dantatv',
     username: 'root',
-    password: '123456',
+    password: 'ixzmysql5',
     timezone: '+08:00',
     pool: {
       max: 5,
