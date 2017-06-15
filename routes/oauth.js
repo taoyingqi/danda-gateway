@@ -50,7 +50,7 @@ router.get('/accessToken', (req, res, next) => {
       // success
       console.log(result)
       content.wxUser = result
-      res.send(confirm)
+      res.send(content)
     })
   })
   // getUser error
