@@ -42,4 +42,12 @@ router.get('/accessToken', function (req, res, next) {
   })
 })
 
+router.get('/:openid', function (req, res, next) {
+  console.log(req.params)
+  client.getUser(req.params.openid, function (e, result) {
+    console.log(e, result)
+    res.send(result)
+  })
+})
+
 module.exports = router
