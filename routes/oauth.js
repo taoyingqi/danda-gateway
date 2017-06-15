@@ -9,10 +9,11 @@ router.get('/service', function (req, res, next) {
   var signature = req.query.signature
   var timestamp = req.query.timestamp
   var nonce = req.query.nonce
-  console.log(`[signature=${signature}, timestamp=${timestamp}, nonce=${nonce}]`)
   var echostr = req.query.echostr
+  console.log(`[signature=${signature}, timestamp=${timestamp}, nonce=${nonce}, echostr=${echostr}]`)
   var cryptor = new WXBizMsgCrypt(wxconfig.token, wxconfig.encodingAESKey, wxconfig.appid)
   var s = cryptor.decrypt(echostr)
+  console.log(`[s.message=${s.message}]`)
   res.send(s.message)
 })
 
