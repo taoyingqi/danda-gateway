@@ -32,7 +32,7 @@ router.get('/redirect', function (req, res, next) {
 })
 
 router.get('/accessToken', (req, res, next) => {
-  client.getAccessToken(req.query.code, (e, result) => {
+  client.getAccessToken(req.query.code, async (e, result) => {
     let content = {}
     // code error
     if (e) {
@@ -43,16 +43,23 @@ router.get('/accessToken', (req, res, next) => {
     }
     content.accessToken = result.data.access_token
     content.openid = result.data.openid
-    client.getUser(content.openid, (err, result) => {
-      if (err) {
-        console.log(err)
-        res.send(content)
+    // 查询用户
+    const user = await models.users.findOne({
+      where: {
+        user_guid: content.openid
       }
-      if (!models.users.fondOne({
-        where: {
-          user_guid: content.openid
+    })
+    if (user) {
+      content.wxUser = user
+    } else {
+      // wx 获取用户信息
+      client.getUser(content.openid, (err, result) => {
+        if (err) {
+          console.log(err)
+          res.send(content)
         }
-      })) {
+        // success
+        console.log(result)
         const var1 = models.users.create({
           user_guid: result.openid,
           nickname: result.nickname,
@@ -63,13 +70,10 @@ router.get('/accessToken', (req, res, next) => {
           headimgurl: result.headimgurl
         })
         console.log(var1)
-      }
-
-      // success
-      console.log(result)
-      content.wxUser = result
-      res.send(content)
-    })
+        content.wxUser = var1
+      })
+    }
+    res.send(content)
   })
 })
 
