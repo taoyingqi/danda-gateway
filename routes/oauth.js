@@ -61,7 +61,7 @@ router.get('/accessToken', (req, res, next) => {
         }
         // success
         console.log(result)
-        const var1 = models.users.create({
+        const newUser = {
           user_guid: result.openid,
           nickname: result.nickname,
           sex: result.sex,
@@ -70,9 +70,11 @@ router.get('/accessToken', (req, res, next) => {
           country: result.country,
           headimgurl: result.headimgurl,
           create_time: new Date()
-        })
+        }
+        const var1 = models.users.create(newUser)
+        console.log('create success')
         console.log(var1)
-        content.wxUser = var1
+        content.wxUser = newUser
         res.send(content)
       })
     }
