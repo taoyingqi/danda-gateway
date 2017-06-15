@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/:openid', function (req, res, next) {
   console.log(req.params)
-  client.getUser(req.params.openid, (e, result) => {
+  client.getUser(req.params.openid, function (e, result) {
     res.send(result)
   })
 })
