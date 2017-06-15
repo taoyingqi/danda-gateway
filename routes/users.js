@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 const { wxconfig } = require('../config')
 var OAuth = require('wechat-oauth')
-var client = new OAuth(wxconfig.appid, wxconfig.secret)
+var client = new OAuth(wxconfig.appid, wxconfig.appsecret)
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {

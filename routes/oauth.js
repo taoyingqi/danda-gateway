@@ -3,18 +3,23 @@ var router = express.Router()
 var WXBizMsgCrypt = require('wechat-crypto')
 const { wxconfig } = require('../config')
 var OAuth = require('wechat-oauth')
-var client = new OAuth(wxconfig.appid, wxconfig.secret)
+var client = new OAuth(wxconfig.appid, wxconfig.appsecret)
+var sha1 = require('sha1')
 
 router.get('/service', function (req, res, next) {
-  var signature = req.query.signature
-  var timestamp = req.query.timestamp
-  var nonce = req.query.nonce
-  var echostr = req.query.echostr
+  const signature = req.query.signature
+  const timestamp = req.query.timestamp
+  const nonce = req.query.nonce
+  const echostr = req.query.echostr
   console.log(`[signature=${signature}, timestamp=${timestamp}, nonce=${nonce}, echostr=${echostr}]`)
-  var cryptor = new WXBizMsgCrypt(wxconfig.token, wxconfig.encodingAESKey, wxconfig.appid)
-  var s = cryptor.decrypt(echostr)
-  console.log(`[s.message=${s.message}]`)
-  res.send(s.message)
+  var str = [wxconfig.token, timestamp, nonce].sort().join('')
+  var sha = sha1(str)
+  console.log(`[sha=${sha}]`)
+  if (sha === signature) {
+    res.send(echostr + '')
+  } else {
+    res.send('err')
+  }
 })
 
 router.get('/redirect', function (req, res, next) {

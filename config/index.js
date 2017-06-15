@@ -2,7 +2,7 @@ module.exports = {
   wxconfig: {
     checkSignature: true,
     appid: 'wx0b5ebf1e230c6cd8',
-    secret: '5a8e955f137343cd91aab94abd092777',
+    appsecret: '5a8e955f137343cd91aab94abd092777',
     token: 'DijkstraEinstein',
     encodingAESKey: 'zqL0AGne2eGd0X22LsgP8z5uoDRm7LYijIW8fo1KDyl',
     notifyUrl: '12',
