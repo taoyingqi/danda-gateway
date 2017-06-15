@@ -31,7 +31,7 @@ router.get('/redirect', function (req, res, next) {
 })
 
 router.get('/accessToken', async (req, res, next) => {
-  var content = null
+  let content = {}
   await client.getAccessToken(req.query.code, (e, result) => {
     // code error
     if (e) {
