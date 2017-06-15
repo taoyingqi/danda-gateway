@@ -1,20 +1,21 @@
 var express = require('express')
 var router = express.Router()
-const { wxconfig } = require('../config')
-var OAuth = require('wechat-oauth')
-var client = new OAuth(wxconfig.appid, wxconfig.appsecret)
+const models = require('../models')
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   res.send('respond with a resource')
 })
 
-router.get('/:openid', function (req, res, next) {
-  console.log(req.params)
-  client.getUser(req.params.openid, function (e, result) {
-    console.log(e, result)
-    res.send(result)
+router.get('/:id', async function (req, res, next) {
+  const { id } = req.params.id
+  const user = await models.users.findOne({
+    where: {
+      user_guid: id
+    }
   })
+  if (!user) res.throw(404)
+  res.send(user)
 })
 
 module.exports = router

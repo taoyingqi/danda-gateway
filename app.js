@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var request = require('request')
 const { proxy } = require('./config')
+const models = require('./models')
 
 var index = require('./routes/index')
 var users = require('./routes/users')
@@ -78,5 +79,9 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.render('error')
 })
+
+;(async function init () {
+  await models.sequelize.sync()
+}())
 
 module.exports = app
