@@ -30,9 +30,9 @@ router.get('/redirect', function (req, res, next) {
   res.redirect(url)
 })
 
-router.get('/accessToken', async (req, res, next) => {
+router.get('/accessToken', (req, res, next) => {
   let content = {}
-  await client.getAccessToken(req.query.code, async (e, result) => {
+  client.getAccessToken(req.query.code, (e, result) => {
     // code error
     if (e) {
       res.send({
@@ -42,7 +42,7 @@ router.get('/accessToken', async (req, res, next) => {
     }
     content.accessToken = result.data.access_token
     content.openid = result.data.openid
-    await client.getUser(content.openid, (err, result) => {
+    client.getUser(content.openid, (err, result) => {
       if (err) {
         console.log(err)
         res.send(content)
@@ -50,6 +50,7 @@ router.get('/accessToken', async (req, res, next) => {
       // success
       console.log(result)
       content.wxUser = result
+      res.send(confirm)
     })
   })
   // getUser error
