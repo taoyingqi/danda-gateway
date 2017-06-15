@@ -1,10 +1,12 @@
 module.exports = {
   wxconfig: {
-    token: 'token',
-    appid: 'wx760f3db868cd2fd5',
-    secret: 'c7bc8017ae7c1c85c569163e74e7a1d9',
-    encodingAESKey: 'encodinAESKey',
-    checkSignature: true
+    checkSignature: true,
+    appid: 'wx0b5ebf1e230c6cd8',
+    secret: '5a8e955f137343cd91aab94abd092777',
+    token: 'DijkstraEinstein',
+    encodingAESKey: 'zqL0AGne2eGd0X22LsgP8z5uoDRm7LYijIW8fo1KDyl',
+    notifyUrl: '12',
+    tradeType: 'JSAPI'
   },
   appcode: 'token123',
   proxy: {

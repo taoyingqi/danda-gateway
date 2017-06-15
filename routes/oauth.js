@@ -1,12 +1,11 @@
 var express = require('express')
 var router = express.Router()
 var WXBizMsgCrypt = require('wechat-crypto')
-// var wxoauth = require('wechat-oauth')
 const { wxconfig } = require('../config')
 var OAuth = require('wechat-oauth')
 var client = new OAuth(wxconfig.appid, wxconfig.secret)
 
-router.get('/wxservice', function (req, res, next) {
+router.get('/service', function (req, res, next) {
   var msgSignature = req.query.msg_signature
   var timestamp = req.query.timestamp
   var nonce = req.query.nonce
@@ -31,17 +30,11 @@ router.get('/accessToken', function (req, res, next) {
   client.getAccessToken(req.query.code, function (e, result) {
     var accessToken = result.data.access_token
     var openid = result.data.openid
+    console.log(result.data)
     res.send({
       accessToken,
       openid
     })
-  })
-})
-
-router.get('/users/:openid', function (req, res, next) {
-  console.log(req.params)
-  client.getUser(req.params.openid, (e, result) => {
-    res.send(result)
   })
 })
 
