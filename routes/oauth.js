@@ -36,8 +36,8 @@ router.get('/accessToken', (req, res, next) => {
     let content = {}
     // code error
     if (e) {
+      res.status(401)
       res.send({
-        code: 1004,
         msg: 'code错误'
       })
     }
