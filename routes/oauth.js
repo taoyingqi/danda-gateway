@@ -51,6 +51,7 @@ router.get('/accessToken', (req, res, next) => {
     })
     if (user) {
       content.wxUser = user
+      res.send(content)
     } else {
       // wx 获取用户信息
       client.getUser(content.openid, (err, result) => {
@@ -67,13 +68,14 @@ router.get('/accessToken', (req, res, next) => {
           province: result.province,
           city: result.city,
           country: result.country,
-          headimgurl: result.headimgurl
+          headimgurl: result.headimgurl,
+          create_time: new Date()
         })
         console.log(var1)
         content.wxUser = var1
+        res.send(content)
       })
     }
-    res.send(content)
   })
 })
 
