@@ -30,12 +30,12 @@ router.get('/redirect', function (req, res, next) {
   res.redirect(url)
 })
 
-router.get('/accessToken', function (req, res, next) {
-  client.getAccessToken(req.query.code, function (e, result) {
+router.get('/accessToken', (req, res, next) => {
+  client.getAccessToken(req.query.code, async (e, result) => {
     const accessToken = result.data.access_token
     const openid = result.data.openid
     let wxuser = null
-    client.getUser(openid, function (err, result) {
+    await client.getUser(openid, (err, result) => {
       if (err) {
         console.log(err)
       }
