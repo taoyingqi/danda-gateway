@@ -30,8 +30,14 @@ router.get('/redirect', function (req, res, next) {
   res.redirect(url)
 })
 
-router.get('/accessToken', (req, res, next) => {
-  client.getAccessToken(req.query.code, async (e, result) => {
+router.get('/accessToken', async (req, res, next) => {
+  await client.getAccessToken(req.query.code, async (e, result) => {
+    if (e) {
+      res.send({
+        code: 1004,
+        msg: 'code错误'
+      })
+    }
     const accessToken = result.data.access_token
     const openid = result.data.openid
     let wxuser = null
