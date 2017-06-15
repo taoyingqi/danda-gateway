@@ -32,7 +32,7 @@ router.get('/redirect', function (req, res, next) {
 
 router.get('/accessToken', async (req, res, next) => {
   let content = {}
-  await client.getAccessToken(req.query.code, (e, result) => {
+  await client.getAccessToken(req.query.code, async (e, result) => {
     // code error
     if (e) {
       res.send({
@@ -42,7 +42,7 @@ router.get('/accessToken', async (req, res, next) => {
     }
     content.accessToken = result.data.access_token
     content.openid = result.data.openid
-    client.getUser(content.openid, (err, result) => {
+    await client.getUser(content.openid, (err, result) => {
       if (err) {
         console.log(err)
         res.send(content)
