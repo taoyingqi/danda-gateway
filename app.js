@@ -112,4 +112,6 @@ app.use(function (err, req, res, next) {
   await models.sequelize.sync()
 }())
 
+console.log(1, process.env.PORT)
+
 module.exports = app
