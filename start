@@ -1,3 +1,2 @@
 git pull origin master
-npm install
 nohup npm run start --PORT=10020 > start.log 2>&1 &
