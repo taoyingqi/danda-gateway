@@ -1,3 +1,8 @@
+echo "shutdown node"
+pkill node
+echo "git pull"
 git pull origin master
+echo "npm install"
 npm install
+echo "npm run start"
 nohup npm run start --PORT=10020 > start.log 2>&1 &
