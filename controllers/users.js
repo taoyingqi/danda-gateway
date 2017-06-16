@@ -20,7 +20,7 @@ module.exports = {
         user_guid: id
       }
     })
-    if (!user) res.throw(404)
+    if (!user) res.status(404)
     res.send(user)
   }
 }

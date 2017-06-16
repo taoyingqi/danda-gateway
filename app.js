@@ -7,6 +7,7 @@ var bodyParser = require('body-parser')
 var request = require('request')
 const { proxy } = require('./config')
 const models = require('./models')
+var session = require('express-session')
 
 var index = require('./routes/index')
 var users = require('./routes/users')
@@ -21,17 +22,42 @@ app.set('view engine', 'jade')
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: false
 }))
-app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(cookieParser('youzidata'))
+app.use(session({
+  store: new session.MemoryStore({ reapInterval: 900000 }),
+  secret: 'youzidata',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true, path: '/' }
+}))
 
 app.use('/', index)
 app.use('/users', users)
 app.use('/wx/oauth', oauth)
 
+// Authorization
+app.use(function (req, res, next) {
+  console.log(0, !session.user)
+  if (!session.user) {
+    console.log(1, req.url)
+    if (req.url.indexOf('/wx/oauth') > 0 || req.url.indexOf('code=') > 0) {
+      next() // 如果请求的地址是登录则通过，进行下一个请求
+    } else {
+      res.status(401).send({
+        'msg': '没有访问权限'
+      })
+    }
+  } else {
+    next()
+  }
+})
+
+// proxy handler
 app.use('/api/*', function (req, res, next) {
   console.log(req.path, req.params)
   var url = proxy.target + req.originalUrl
@@ -46,7 +72,7 @@ app.use('/api/*', function (req, res, next) {
   request(
     options,
     function (e, r, body) {
-      console.log(e, r, body)
+      console.log(e, body)
       res.send(JSON.parse(body))
     })
   // error
