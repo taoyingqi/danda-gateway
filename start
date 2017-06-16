@@ -1,0 +1,2 @@
+git pull origin master
+nohup npm run start > start.log 2>&1 &
