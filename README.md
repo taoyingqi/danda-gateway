@@ -12,6 +12,6 @@ http://docs.sequelizejs.com/
 [node wechat](https://github.com/node-webot/wechat)
 
 # deployed on linux
-expose PORT=10020
-chmod +x start
-./start
+* expose PORT=10020
+* chmod +x start
+* ./start
