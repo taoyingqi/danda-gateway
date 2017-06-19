@@ -30,7 +30,7 @@ danda 2.0 api gateway
 * git checkout .
 * git pull origin master
 3. install
-* expose PORT=10020
+* export PORT=10020
 * chmod +x start
 * ./start
 3.1. reinstall
