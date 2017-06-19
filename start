@@ -1,5 +1,7 @@
 echo "shutdown node"
 pkill node
+echo "checkout start"
+git checkout .
 echo "git pull"
 git pull origin master
 echo "npm install"
