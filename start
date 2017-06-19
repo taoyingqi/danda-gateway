@@ -4,6 +4,7 @@ echo "checkout start"
 git checkout .
 echo "git pull"
 git pull origin master
+chmod +x start
 echo "npm install"
 npm install
 # export PORT=10020
