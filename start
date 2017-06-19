@@ -7,6 +7,7 @@ git pull origin master
 chmod +x start
 echo "npm install"
 npm install
-# export PORT=10020
+export PORT=10020
+echo "run at ${POST}"
 echo "npm run start"
 nohup npm run start > start.log 2>&1 &

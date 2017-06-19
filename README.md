@@ -25,13 +25,9 @@ danda 2.0 api gateway
 * 安装 node-v8.10
 2. linux commend line
 * clone code from git repository
-2.1. update
 * cd /danta-gateway
-* git checkout .
-* git pull origin master
 3. install
 * export PORT=10020
 * chmod +x start
 * ./start
 3.1. reinstall
-* 2.1, 3
