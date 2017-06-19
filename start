@@ -4,6 +4,6 @@ echo "git pull"
 git pull origin master
 echo "npm install"
 npm install
-expose PORT=10020
+# expose PORT=10020
 echo "npm run start"
 nohup npm run start > start.log 2>&1 &
