@@ -27,7 +27,6 @@ danda 2.0 api gateway
 * clone code from git repository
 * cd /danta-gateway
 3. install
-* export PORT=10020
 * chmod +x start
 * ./start
 3.1. reinstall
