@@ -20,6 +20,11 @@ danda 2.0 api gateway
 * /package.json
 * /start _启动脚本_
 
+# 接口
+* /wx/service 微信接入
+* /wx/redirect 网页授权跳转
+* /wx/accessToken 获取 accessToken，需要 code，返回数据包含用户信息
+
 # deployed on linux
 1. environment
 * 安装 node-v8.10
